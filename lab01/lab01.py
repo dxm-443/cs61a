@@ -67,5 +67,14 @@ def double_eights(n):
     False
     """
     "*** YOUR CODE HERE ***"
-
-
+    # 相邻两次的余数为8才会return true
+    flag = 0
+    while n > 0:
+        n, d = n // 10, n % 10
+        if d == 8 and flag == 1:
+            return True
+        elif d == 8:
+            flag = 1
+        else:
+            flag = 0
+    return False
