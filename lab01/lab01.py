@@ -11,6 +11,18 @@ def falling(n, k):
     1
     """
     "*** YOUR CODE HERE ***"
+    if k == 0:
+        return 1
+    elif k > 0 and k <= n:
+        product = 1
+        m = n - k + 1
+        while m <= n:
+            product *= m
+            m += 1
+        return product
+    else:
+        print("k should >= 0 and <= n")
+
 
 
 
