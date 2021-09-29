@@ -47,7 +47,7 @@ def free_bacon(score):
     pi = FIRST_101_DIGITS_OF_PI
 
     # Trim pi to only (score + 1) digit(s)
-    # BEGIN PROBLEM 2
+    # BEGIN PROBLEM
     "*** YOUR CODE HERE ***"
     i = 100 - score
     pi = pi // pow(10, i)
@@ -153,7 +153,7 @@ def silence(score0, score1):
 
 
 def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
-         goal=GOAL_SCORE, say=silence):
+         goal=GOAL_SCORE, say=slice):
     """Simulate a game and return the final scores of both players, with Player
     0's score first, and Player 1's score second.
 
@@ -183,12 +183,14 @@ def play(strategy0, strategy1, score0=0, score1=0, dice=six_sided,
             score1 += take_turn(num_roll, score0, dice)
             if extra_turn(score1, score0):
                 who = 0
+        # END PROBLEM 5
+        # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
+        # BEGIN PROBLEM 6
+        "*** YOUR CODE HERE ***"
+        # END PROBLEM 6
+        h = say(score0, score1)
+        say = h
         who = other(who)
-    # END PROBLEM 5
-    # (note that the indentation for the problem 6 prompt (***YOUR CODE HERE***) might be misleading)
-    # BEGIN PROBLEM 6
-    "*** YOUR CODE HERE ***"
-    # END PROBLEM 6
     return score0, score1
 
 
@@ -272,6 +274,37 @@ def announce_highest(who, last_score=0, running_high=0):
     assert who == 0 or who == 1, 'The who argument should indicate a player.'
     # BEGIN PROBLEM 7
     "*** YOUR CODE HERE ***"
+    def say(score0, score1):
+        flag = 0
+        if who == 1:
+            score1_change = score1 - last_score
+            if score1_change > running_high:
+                print(score1_change, "point(s)! The most yet for Player 1")
+                flag = 1
+                new_high = score1_change
+            new_score = score1
+        else:
+            score0_change = score0 - last_score
+            if score0_change > running_high:
+                print(score0_change, "point(s)! The most yet for Player 0")
+                flag = 1
+                new_high = score0_change
+            new_score = score0
+        return announce_highest(who, new_score, new_high if flag == 1 else running_high)
+    # def say(score0, score1):
+    #     flag = 0
+    #     if (who == 0):
+    #         if (score0 - last_score > running_high):
+    #             print(score0-last_score, "point(s)! The most yet for Player 0")
+    #             flag = 1
+    #         return announce_highest(who, score0, score0-last_score if flag == 1 else running_high)
+    #     else:
+    #         if (score1 - last_score > running_high):
+    #             print(score1-last_score, "point(s)! The most yet for Player 1")
+    #             flag = 1
+    #         return announce_highest(who, score1, score1-last_score if flag == 1 else running_high)
+    return say
+
     # END PROBLEM 7
 
 
@@ -312,6 +345,13 @@ def make_averaged(original_function, trials_count=1000):
     """
     # BEGIN PROBLEM 8
     "*** YOUR CODE HERE ***"
+    def averaged_dice(*args):
+        sum_total = 0
+        for i in range(0, trials_count):
+            sum_total += original_function(*args)
+        total_average = sum_total / trials_count
+        return total_average
+    return averaged_dice
     # END PROBLEM 8
 
 
